@@ -32,16 +32,16 @@ fetch(apiUrl)
     // Determine the result
     let result;
     if (ugaScore > opponentsScore) {
-      result = "uGA won.";
+      result = "u[sic]ga won.";
     } else if (ugaScore < opponentsScore) {
-      result = "uGA lost! America won today.";
+      result = "u[sic]ga lost! America won today.";
     } else {
       result = "It's a tie.";
     }
 
     // Create UGA's score element
     const ugaScoreElement = document.createElement('p');
-    ugaScoreElement.textContent = `uGA's score: ${ugaScore}`;
+    ugaScoreElement.textContent = `u[sic]ga's score: ${ugaScore}`;
 
     // Create opponent's score element
     const opponentScoreElement = document.createElement('p');

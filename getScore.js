@@ -10,6 +10,7 @@ const localVideoFiles = [
     "/vids/vincemoney.mp4",
     "/vids/khaledflex.mp4",
     "/vids/joesmad.mp4",
+    "/vids/madmad.mp4",
   // Add more video filenames as needed
 ];
 

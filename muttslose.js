@@ -67,9 +67,12 @@ const randomVideoFilename = getRandomVideoFilename();
 
     // Create footer element
     const footer = document.createElement('footer');
-    footer.innerHTML = '<br>Made by <a href="https://www.alexj.io/">Alex Jenkins</a>,';
+    footer.innerHTML = 'Made by <a href="https://www.alexj.io/">Alex Jenkins</a>,';
     footer.innerHTML += '<br> Go Jackets! <br>';
-    footer.innerHTML += '<br> <a href="https://www.buymeacoffee.com/alexjenkins"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=alexjenkins&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>';
+    footer.innerHTML += '<iframe src="https://ghbtns.com/github-btn.html?user=rockenman1234&repo=didugawin&type=star&size=large&text=false" frameborder="0" scrolling="0" width="42" height="30" title="GitHub"></iframe>';
+    footer.innerHTML += '<br> <a href="https://www.buymeacoffee.com/alexjenkins" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important; width: 109px !important; margin-right: 5px;"></a>';
     footer.style.textAlign = 'center';
     footer.style.padding = '10px';
     document.body.appendChild(footer);
+
+    

@@ -22,23 +22,47 @@ function getRandomVideoFilename() {
 
 // Fetch data from the API
 fetch(apiUrl)
-  .then(response => response.json())
-  .then(data => {
-    // Get UGA's score
-    const ugaScore = data.team.nextEvent[0].competitions[0].competitors.find(comp => comp.team.abbreviation === "UGA").score.value;
+    .then(response => response.json())
+    .then(data => {
+        const nextEvent = data.team.nextEvent[0];
 
-    // Get the opponent's score
-    const opponentsScore = data.team.nextEvent[0].competitions[0].competitors.find(comp => comp.team.abbreviation !== "UGA").score.value;
+        if (!nextEvent) {
+            // No upcoming event
+            const noEventElement = document.createElement('p');
+            noEventElement.textContent = "UGA has not played anyone recently.";
+            document.body.appendChild(noEventElement);
+            return;
+        }
 
-    // Determine the result
-    let result;
-    if (ugaScore > opponentsScore) {
-      result = "u[sic]ga won.";
-    } else if (ugaScore < opponentsScore) {
-      result = "u[sic]ga lost! America won today.";
-    } else {
-      result = "It's a tie.";
-    }
+        const competitions = nextEvent.competitions[0];
+
+        if (!competitions || !competitions.competitors) {
+            // No competition or competitors information
+            const noEventElement = document.createElement('p');
+            noEventElement.textContent = "UGA has not played anyone recently.";
+            document.body.appendChild(noEventElement);
+            return;
+        }
+
+        // Get UGA's score
+        const ugaCompetitor = competitions.competitors.find(comp => comp.team.abbreviation === "UGA");
+        const ugaScore = ugaCompetitor ? ugaCompetitor.score.value : "N/A";
+
+        // Get the opponent's score
+        const opponentsCompetitor = competitions.competitors.find(comp => comp.team.abbreviation !== "UGA");
+        const opponentsScore = opponentsCompetitor ? opponentsCompetitor.score.value : "N/A";
+
+        // Determine the result
+        let result;
+        if (ugaScore === "N/A" || opponentsScore === "N/A") {
+            result = "Score information not available.";
+        } else if (ugaScore > opponentsScore) {
+            result = "UGA won.";
+        } else if (ugaScore < opponentsScore) {
+            result = "UGA lost! America won today.";
+        } else {
+            result = "It's a tie.";
+        }
 
     // Create UGA's score element
     const ugaScoreElement = document.createElement('p');
@@ -117,5 +141,40 @@ fetch(apiUrl)
     footer.style.padding = '10px';
     document.body.appendChild(footer);
   })
-  .catch(error => console.error("Error fetching data:", error));
+  .catch(error => {
+    const errorElement = document.createElement('p');
+    errorElement.innerHTML = "u[sic]ga's score is not available. ";
+    errorElement.innerHTML += "<br> It doesn't appear that they played anyone recently.";
+    errorElement.style.color = 'red';
+    errorElement.style.fontSize = '30px';
+    errorElement.style.textAlign = 'center';
+    document.body.appendChild(errorElement);
+
+    // Create a button
+    const mutts = document.createElement('p');
+    mutts.textContent = 'Wanna act like they did?';
+
+    const clickMeButton = document.createElement('button');
+    clickMeButton.textContent = 'Click Me';
+    document.body.style.textAlign = 'center';
+
+    // Add an event listener to the button
+    clickMeButton.addEventListener('click', () => {
+        // Redirect to another HTML site
+        window.location.href = 'mutts.html';
+    });
+
+  // Append the button to the body
+  document.body.appendChild(mutts);
+  document.body.appendChild(clickMeButton);
+
+    const footer = document.createElement('footer');
+    footer.innerHTML = '<br>Made by <a href="https://www.alexj.io/">Alex Jenkins</a>,';
+    footer.innerHTML += '<br> Go Jackets! <br>';
+    footer.innerHTML += '<br> <a href="https://www.buymeacoffee.com/alexjenkins"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=alexjenkins&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>';
+    footer.style.textAlign = 'center';
+    footer.style.padding = '10px';
+    document.body.appendChild(footer);
+});
+
 
